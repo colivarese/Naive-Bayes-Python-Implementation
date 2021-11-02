@@ -2,6 +2,7 @@ import math as math
 from sklearn.metrics import confusion_matrix, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class NaiveBayes:
@@ -51,7 +52,7 @@ class NaiveBayes:
                 probabilities[class_value] *= self.gauss_probability(row[i], mean, std)
         return probabilities
 
-    def predict(self, data, labels,stats):
+    def predict_example(self, data, labels,stats):
         preds = []
 
         for i in range(len(data)):
@@ -75,3 +76,13 @@ class NaiveBayes:
 
         acc_score = accuracy_score(labels,preds)
         print(f'Accuracy score is : {acc_score:.2f}')
+
+        for n in [5,6]:
+            img_mean= []
+            for c in stats[n]:
+                img_mean.append(c[0])
+            img_mean = np.array([int(x) for x in img_mean])
+            img_five = img_mean.reshape((8,8))
+            plt.figure(figsize=(4,4))
+            plt.imshow(img_five)
+            plt.show()
