@@ -4,7 +4,7 @@ from NaiveClass import NaiveBayes
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    path = '/Users/cesarolivares/Documents/Maestria CIC/Introducción al Aprendizaje Máquina/Tareas/knn-dataset/'
+    path = './dataset/'
 
     for _ in range(1):
         # Load training data
