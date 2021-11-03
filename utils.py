@@ -1,5 +1,29 @@
+from typing import Any
 import pandas as pd
 import numpy as np
+
+def separate_data(data:pd.DataFrame, outcome:str, percent:float):
+    size = len(data)
+    div = size * percent
+    low = int(np.floor(div))
+    lim = size - low
+    training_data = data.iloc[:lim]
+    test_data = data.iloc[lim:]
+
+    training_labels = training_data[outcome]
+    test_labels = test_data[outcome]
+
+    training_data = training_data.drop(columns=[outcome])
+    test_data = test_data.drop(columns=[outcome])
+
+
+    training_data = training_data.to_numpy()
+    test_data = test_data.to_numpy()
+    training_labels = training_labels.to_numpy()
+    test_labels = test_labels.to_numpy()
+
+    return training_data, test_data, training_labels, test_labels
+
 
 def load_example_data():
 

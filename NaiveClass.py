@@ -40,6 +40,8 @@ class NaiveBayes:
 
     def gauss_probability(self, x, mean, std):
         e = math.exp(-((x-mean)**2 / (2 * std**2)))
+        if std == 0:
+            std += 0.0001
         return (1 / (math.sqrt(2 * math.pi) * std)) * e
 
     def class_probabilities(self, stats, row):
@@ -51,6 +53,23 @@ class NaiveBayes:
                 mean, std, count = class_stats[i]
                 probabilities[class_value] *= self.gauss_probability(row[i], mean, std)
         return probabilities
+
+    def predict(self, data, labels, stats):
+        preds = []
+
+        for i in range(len(data)):
+            probabilities = self.class_probabilities(stats, data[i])
+            preds.append(max(probabilities, key=probabilities.get))
+
+        acc_score = accuracy_score(labels,preds)
+        print(f'Accuracy score is : {acc_score:.2f}')
+
+        cf = confusion_matrix(labels, preds)
+        ax = plt.subplot()
+        sns.heatmap(cf, annot=True, fmt='g', ax=ax, cbar=False,
+                    cmap='viridis')
+
+        plt.show()
 
     def predict_example(self, data, labels,stats):
         preds = []
